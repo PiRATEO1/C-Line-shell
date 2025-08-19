@@ -84,13 +84,12 @@ int launch(char **args) {
 
     if (strcmp(args[0], "camera") == 0) {
         #ifdef _WIN32
-            // The system() function passes the command to the OS shell (cmd.exe).
-            // This is the easiest way to run complex shell commands like 'start'.
+            
             system("start microsoft.windows.camera:");
         #else
             fprintf(stderr, "cline: The 'camera' command is only available on Windows.\n");
         #endif
-        return 1; // Tell the shell loop to continue
+        return 1; 
     }
 
     if (strcmp(args[0], "start") == 0) {
@@ -107,14 +106,14 @@ int launch(char **args) {
         } else {
             #ifdef _WIN32
                 char command[256];
-                // Safely construct the command string to prevent buffer overflows
+                
                 snprintf(command, sizeof(command), "start %s", args[1]);
                 system(command);
             #else
                 fprintf(stderr, "cline: The 'start' command is only available on Windows.\n");
             #endif
         }
-        return 1; // Tell the shell loop to continue
+        return 1; 
     }
     
 
@@ -164,7 +163,7 @@ void shell_loop(void) {
 
     do {
         if (getcwd(cwd, sizeof(cwd)) != NULL) {
-            // FIX: Added a space to the format string to satisfy the compiler warning
+            
             snprintf(prompt, sizeof(prompt), "%s> ", cwd);
         } else {
             perror("getcwd() error");
