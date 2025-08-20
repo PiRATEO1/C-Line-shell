@@ -115,6 +115,60 @@ int launch(char **args) {
         }
         return 1; 
     }
+
+    if(strcmp(args[0],"Kill")==0){
+        #ifdef _WIN32
+            
+            system("shutdown /s /t 0");
+        #else
+            system("shutdown now");
+        #endif
+         return 1;
+    }
+
+    if(strcmp(args[0],"reboot")==0){
+        #ifdef _WIN32
+            system("shutdown /r /t 0");
+        #else
+            system("reboot");
+        #endif
+         return 1;
+    }
+
+    if(strcmp(args[0],"lock")==0){
+        #ifdef _WIN32
+            system("rundll32.exe user32.dll,LockWorkStation");
+        #else
+            fprintf(stderr, "cline: 'lock' is not universally supported on Linux.\n");
+        #endif
+         return 1;
+    }
+
+    if (strcmp(args[0], "sleep") == 0) {
+        #ifdef _WIN32
+            system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0");
+        #else
+            system("systemctl suspend");
+        #endif
+        return 1;
+    }
+
+    if (strcmp(args[0], "help") == 0) {
+        printf("--- Cline Shell Help ---\n");
+        printf("These are the built-in commands:\n");
+        printf("  cd [dir]       - Change the current directory.\n");
+        printf("  pwd            - Print the current working directory.\n");
+        printf("  clear / cls    - Clear the terminal screen.\n");
+        printf("  start [app]    - (Windows only) Launch an application.\n");
+        printf("  camera         - (Windows only) Launch the camera app.\n");
+        printf("  shutdown       - Shuts down the computer.\n");
+        printf("  restart        - Restarts the computer.\n");
+        printf("  sleep          - Puts the computer to sleep.\n");
+        printf("  lock           - (Windows only) Locks the computer.\n");
+        printf("  exit           - Exit the shell.\n");
+        printf("------------------------\n");
+        return 1;
+    }
     
 
 #ifdef _WIN32
@@ -192,6 +246,10 @@ void shell_loop(void) {
 int main(int argc, char **argv) {
     (void)argc;
     (void)argv;
+
+    printf("Welcome to Cline Shell!\n");
+    printf("Type 'help' to see a list of built-in commands.\n\n");
+
     shell_loop();
     return EXIT_SUCCESS;
 }
