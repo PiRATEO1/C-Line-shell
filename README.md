@@ -1,4 +1,5 @@
-Cline Shell
+C-Line Shell
+
 Version 1.0.2
 
 A lightweight, cross-platform command-line shell built from the ground up in C. Cline serves as a simple yet powerful interface for interacting with the operating system, combining the core principles of classic Unix shells with modern usability features like command history and tab completion.
