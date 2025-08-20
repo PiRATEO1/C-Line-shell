@@ -98,6 +98,7 @@ int launch(char **args) {
         }
         else if(strcmp(args[1],"camera")==0){
             #ifdef _WIN32
+            printf("Starting Camera\n");
             system("start microsoft.windows.camera:");
         #else
             fprintf(stderr, "cline: The 'camera' command is only available on Windows.\n");
@@ -106,6 +107,7 @@ int launch(char **args) {
         } else {
             #ifdef _WIN32
                 char command[256];
+                printf("Starting %s\n",args[1]);
                 
                 snprintf(command, sizeof(command), "start %s", args[1]);
                 system(command);
@@ -116,10 +118,10 @@ int launch(char **args) {
         return 1; 
     }
 
-    if(strcmp(args[0],"Kill")==0){
+    if(strcmp(args[0],"kill")==0){
         #ifdef _WIN32
-            
-            system("shutdown /s /t 0");
+            printf("System will shutdown in 5 sec\n");
+            system("shutdown /s /t 5");
         #else
             system("shutdown now");
         #endif
@@ -128,7 +130,8 @@ int launch(char **args) {
 
     if(strcmp(args[0],"reboot")==0){
         #ifdef _WIN32
-            system("shutdown /r /t 0");
+            printf("System wiill reboot in 5 sec\n");
+            system("shutdown /r /t 5");
         #else
             system("reboot");
         #endif
@@ -137,6 +140,7 @@ int launch(char **args) {
 
     if(strcmp(args[0],"lock")==0){
         #ifdef _WIN32
+            printf("System locked\n");
             system("rundll32.exe user32.dll,LockWorkStation");
         #else
             fprintf(stderr, "cline: 'lock' is not universally supported on Linux.\n");
